@@ -1,0 +1,25 @@
+* {
+    background-color: teal;
+    font-family: "Times New Roman", Times, serif;
+}
+.image-container {
+    display: flex;
+    flex-direction: row;
+    background-color: lightgrey;
+}
+.image-card {
+    background-color: grey;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid black;
+}
+.image-card img {
+    object-fit: cover;
+    margin: 10px;
+}
+.image-card span {
+    background-color: grey;
+    text-align: center;
+}
