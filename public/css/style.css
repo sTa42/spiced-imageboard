@@ -1,22 +1,23 @@
-* {
+/* * {
     background-color: teal;
     font-family: "Times New Roman", Times, serif;
-}
+} */
 .image-container {
-    display: flex;
-    flex-direction: row;
-    background-color: lightgrey;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-auto-rows: 320px;
 }
 .image-card {
     background-color: grey;
 
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
     border: 1px solid black;
 }
 .image-card img {
-    object-fit: cover;
+    /* object-fit: cover; */
     margin: 10px;
 }
 .image-card span {

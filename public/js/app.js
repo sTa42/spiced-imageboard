@@ -41,7 +41,7 @@ Vue.createApp({
                         this.username = "";
                         this.title = "";
                         this.description = "";
-                        this.file = "null";
+                        this.file = null;
                     }
                 })
                 .catch((err) => console.log("error", err));
