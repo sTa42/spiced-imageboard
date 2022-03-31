@@ -27,13 +27,32 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
             req.body.title,
             req.body.username,
             req.body.description
-        ).then(({ rows }) => {
-            console.log(rows);
-            res.json({ success: true, image: rows[0] });
-        });
+        )
+            .then(({ rows }) => {
+                console.log(rows);
+                res.json({ success: true, image: rows[0] });
+            })
+            .catch(() => {
+                res.sendStatus(500);
+            });
     } else {
         res.json({ success: false });
     }
+});
+app.get("/image/:imageId", (req, res) => {
+    if (isNaN(req.params.imageId)) {
+        return res.json({ success: false, message: "no valid input" });
+    }
+    db.getDataFromImage(req.params.imageId)
+        .then((result) => {
+            if (!result.rows[0]) {
+                return res.json({ success: false, message: "no valid id" });
+            }
+            res.json({ success: true, image: result.rows[0] });
+        })
+        .catch(() => {
+            res.json({ success: false });
+        });
 });
 app.get("*", (req, res) => {
     res.sendFile(`${__dirname}/index.html`);

@@ -1,4 +1,5 @@
 import * as Vue from "./vue.js";
+import modalFocusImage from "./modalFocusImage.js";
 
 Vue.createApp({
     data() {
@@ -8,7 +9,11 @@ Vue.createApp({
             title: "",
             description: "",
             file: null,
+            selectedImage: null,
         };
+    },
+    components: {
+        "modal-focus-image": modalFocusImage,
     },
     mounted() {
         fetch("/images")
@@ -38,17 +43,28 @@ Vue.createApp({
                     console.log(response);
                     if (response.success) {
                         this.images.unshift(response.image);
-                        this.username = "";
-                        this.title = "";
-                        this.description = "";
-                        this.file = null;
+                        this.clearInputFields();
                     }
                 })
                 .catch((err) => console.log("error", err));
         },
-        fileSelectHandler: function (e) {
+        fileSelectHandler(e) {
             console.log(e);
             this.file = e.target.files[0];
+        },
+        clearInputFields() {
+            this.username = "";
+            this.title = "";
+            this.description = "";
+            this.file = null;
+            this.$refs.fileInput.value = null;
+        },
+        selectImage(imageIdClicked) {
+            console.log(imageIdClicked);
+            this.selectedImage = imageIdClicked;
+        },
+        unfocusImage() {
+            this.selectedImage = null;
         },
     },
 }).mount("#main");

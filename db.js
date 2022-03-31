@@ -16,3 +16,6 @@ exports.insertImage = (url, title, username, description) => {
         [url, title, username, description]
     );
 };
+exports.getDataFromImage = (imageId) => {
+    return db.query(`SELECT * FROM images WHERE id=$1;`, [imageId]);
+};
