@@ -51,7 +51,7 @@ app.get("/image/:imageId", (req, res) => {
             res.json({ success: true, image: result.rows[0] });
         })
         .catch(() => {
-            res.json({ success: false });
+            res.sendStatus(500);
         });
 });
 app.get("*", (req, res) => {

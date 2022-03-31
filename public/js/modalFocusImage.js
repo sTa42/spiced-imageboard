@@ -31,13 +31,29 @@ const modalFocusImage = {
             this.$emit("close");
         },
     },
-    template: ` <div>
-                    <img :src="url" :alt="title">
-                    <p>{{title}}</p>
-                    <p>{{username}}</p>
-                    <p>{{description}}</p>    
-                    <p>{{createdAt}}</p>
-                    <p @click=triggerUnfocus>X</p>                
-                </div>`,
+    template: `
+    <div class="overlay" @click=triggerUnfocus> 
+        <img @click=triggerUnfocus src="/close-button.png" class="closeButton" width="50" height="50" alt="unfocus image button">
+        <div class="focusImageContainer" @click.stop>
+            <img :src="url" :alt="title" class="focusedImage">
+                <div class="attributesContainer">
+                    <div class="modalTitle">
+                        <h4>{{title}}</h4>
+                    </div>
+                    <div class="modalAttribute">
+                        <p>UPLOADED BY</p>
+                        <p>{{username}}</p>
+                    </div>
+                    <div class="modalAttribute">
+                        <p>UPLOAD DATE</p>
+                        <p>{{createdAt}}</p>
+                    </div>
+                    <div class="modalDescription">
+                        <p>DESCRIPTION</p>
+                        <p>{{description}}</p>
+                    </div>
+                </div>
+        </div>
+    </div>`,
 };
 export default modalFocusImage;

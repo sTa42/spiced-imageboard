@@ -18,7 +18,7 @@
         </form>
         <div v-if="images.length" class="image-container">
             <div v-for="image in images" :key="image.id" @click="selectImage(image.id)" class="image-card">
-                <img :src="image.url" width="350" height="200">
+                <img :src="image.url" :alt="image.title" width="350" height="200">
                 <span>{{image.title}}</span>
             </div>
         </div>
