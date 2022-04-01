@@ -46,19 +46,30 @@ const commentsComponent = {
             this.username = "";
             this.comment = "";
         },
+        formatDate(date) {
+            let myDate = new Date(date);
+            // console.log(myDate);
+            return `${myDate.getDay()}.${myDate.getMonth()}.${myDate.getFullYear()} ${myDate.getHours()}:${myDate.getMinutes()}`;
+        },
     },
     template: ` <div class="comments-container">
-                    <div class="commentsPosting">
+                    <div class="comments-attributes">
                         <form>
                             <input v-model="username" type="text" name="username" placeholder="username" required>
                             <input v-model="comment" type="text" name="comment" placeholder="comment" required>
                             <button @click.prevent="commentPostClickHandler">Post Comment</button>
                         </form>
                     </div>
-                        <div v-for="comment in comments" :key="comment.id" class="comment">
-                        {{comment.username}} {{comment.comment}} {{comment.created_at}}
-                    </div>   
-
+                        <div v-if="comments.length" class="userComments">
+                            <div v-for="comment in comments" :key="comment.id" class="userCommentContainer">
+                                <div class="userComment">
+                                    <p class="commentAttribute left"><span class="comment-username">{{comment.username}}</span></p>
+                                    <p class="commentAttribute right"><span class="date">{{comment.created_at}}</span></p>
+                                    <p class="commentText">{{comment.comment}}</p> 
+                                </div>
+                            </div>
+                        </div>   
+                        <div v-else class="emptyComments"><p>Oh noes. Nobody commented yet. Will <strong>you</strong> be the first?</p></div>    
                 </div>`,
 };
 

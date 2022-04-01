@@ -36,6 +36,13 @@ const modalFocusImage = {
         triggerUnfocus() {
             this.$emit("close");
         },
+        formatDate(date) {
+            console.log(date);
+            let myDate = new Date(date);
+            console.log(myDate);
+            console.log(myDate.getUTCMonth());
+            return `${myDate.getDate()}.${myDate.getMonth()}.${myDate.getFullYear()} ${myDate.getHours()}:${myDate.getMinutes()}`;
+        },
     },
     template: `
     <div class="overlay" @click=triggerUnfocus> 

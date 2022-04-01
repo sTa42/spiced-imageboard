@@ -46,7 +46,7 @@
     background-color: lightgrey;
     max-height: 85vh;
     max-width: 85vw;
-    overflow: hidden;
+    overflow: scroll;
     /* position: relative; */
 }
 .overlay .focusImageContainer img {
@@ -81,4 +81,66 @@
 
 .closeButton:hover {
     cursor: pointer;
+}
+.loadMore {
+    text-align: center;
+    width: 100%;
+    font-size: 2em;
+    margin-top: 10px;
+}
+.loadMore:hover {
+    cursor: pointer;
+}
+.comments-attributes {
+    margin-top: 3em;
+    margin-bottom: 1em;
+}
+.comments-attributes form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    /* text-align: center; */
+}
+.comments-attributes form input {
+    text-align: center;
+    /* flex: 1 0 35%; */
+}
+.comments-attributes form button {
+    margin-top: 1em;
+    margin-bottom: 3em;
+}
+
+.emptyComments {
+    text-align: center;
+}
+.comment-username {
+    color: red;
+}
+.userCommentContainer {
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.userCommentContainer .userComment p {
+    margin: 0;
+}
+.userComment {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 2em;
+}
+.userComment .commentAttribute {
+    flex: 1 0 50%;
+}
+
+.left {
+    text-align: left;
+}
+.right {
+    text-align: right;
+}
+.userComment .commentText {
+    flex: 1 0 100%;
 }

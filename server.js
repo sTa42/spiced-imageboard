@@ -3,6 +3,10 @@ const app = express();
 const db = require("./db");
 const { uploader } = require("./upload");
 const s3 = require("./s3");
+const {
+    requireValidPictureData,
+    requireValidCommentData,
+} = require("./middleware.js");
 
 app.use(express.static("./public"));
 
@@ -80,8 +84,9 @@ app.get("/comments/:imageId", (req, res) => {
             res.sendStatus(500);
         });
 });
-app.post("/comments/submit", (req, res) => {
+app.post("/comments/submit", requireValidCommentData, (req, res) => {
     console.log(req.body);
+
     db.addCommentForImage(req.body.imageId, req.body.username, req.body.comment)
         .then(({ rows }) => {
             // console.log(rows[0]);
