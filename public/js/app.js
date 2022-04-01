@@ -10,6 +10,8 @@ Vue.createApp({
             description: "",
             file: null,
             selectedImage: null,
+            lastIdImage: "",
+            showMoreButton: true,
         };
     },
     components: {
@@ -22,6 +24,8 @@ Vue.createApp({
                 console.log({ data });
                 console.log(data);
                 this.images = data;
+                this.lastIdImage = data[data.length - 1].id;
+                console.log(this.lastIdImage);
             });
     },
     methods: {
@@ -65,6 +69,28 @@ Vue.createApp({
         },
         unfocusImage() {
             this.selectedImage = null;
+        },
+        getMoreImages(lowestId) {
+            fetch(`/images/more/${lowestId}`)
+                .then((res) => res.json())
+                .then((response) => {
+                    console.log(response);
+
+                    if (response.success) {
+                        response.images.forEach((item) => {
+                            if (item.lowestId === item.id) {
+                                this.showMoreButton = false;
+                            }
+                        });
+                        this.images = [...this.images, response.images].flat();
+                        console.log(this.images);
+                        this.lastIdImage =
+                            response.images[response.images.length - 1].id;
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         },
     },
 }).mount("#main");

@@ -17,6 +17,21 @@ app.get("/images", (req, res) => {
             res.sendStatus(500);
         });
 });
+app.get("/images/more/:lowestId", (req, res) => {
+    console.log(req.params);
+    db.getMoreImages(req.params.lowestId)
+        .then(({ rows: images }) => {
+            console.log(images);
+            res.json({
+                success: true,
+                images: images,
+            });
+        })
+        .catch((err) => {
+            console.log(err);
+            res.sendStatus(500);
+        });
+});
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     console.log("the body", req.body);
     console.log("the file", req.file);
