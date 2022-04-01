@@ -74,7 +74,7 @@ Vue.createApp({
             fetch(`/images/more/${lowestId}`)
                 .then((res) => res.json())
                 .then((response) => {
-                    console.log(response);
+                    // console.log(response);
 
                     if (response.success) {
                         response.images.forEach((item) => {
@@ -83,7 +83,7 @@ Vue.createApp({
                             }
                         });
                         this.images = [...this.images, response.images].flat();
-                        console.log(this.images);
+                        // console.log(this.images);
                         this.lastIdImage =
                             response.images[response.images.length - 1].id;
                     }

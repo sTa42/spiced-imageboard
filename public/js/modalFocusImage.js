@@ -1,13 +1,17 @@
+import commentsComponent from "./commentsComponent.js";
+
 const modalFocusImage = {
     data() {
         return {
-            heading: "Hello from First COMP",
             title: "",
             username: "",
             url: "",
             description: "",
             createdAt: "",
         };
+    },
+    components: {
+        "comments-component": commentsComponent,
     },
     props: ["imageId"],
     mounted() {
@@ -24,7 +28,9 @@ const modalFocusImage = {
                     this.createdAt = data.image.created_at;
                 }
             })
-            .catch();
+            .catch((err) => {
+                console.log(err);
+            });
     },
     methods: {
         triggerUnfocus() {
@@ -53,6 +59,7 @@ const modalFocusImage = {
                         <p>{{description}}</p>
                     </div>
                 </div>
+                <comments-component v-if="imageId" :image-id="imageId"></comments-component>
         </div>
     </div>`,
 };

@@ -69,6 +69,29 @@ app.get("/image/:imageId", (req, res) => {
             res.sendStatus(500);
         });
 });
+
+app.get("/comments/:imageId", (req, res) => {
+    db.getCommentsForImage(req.params.imageId)
+        .then(({ rows: comments }) => {
+            res.json(comments);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.sendStatus(500);
+        });
+});
+app.post("/comments/submit", (req, res) => {
+    console.log(req.body);
+    db.addCommentForImage(req.body.imageId, req.body.username, req.body.comment)
+        .then(({ rows }) => {
+            // console.log(rows[0]);
+            res.json({ success: true, comment: rows[0] });
+        })
+        .catch((err) => {
+            console.log(err);
+            res.sendStatus(500);
+        });
+});
 app.get("*", (req, res) => {
     res.sendFile(`${__dirname}/index.html`);
 });
