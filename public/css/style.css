@@ -2,11 +2,18 @@
     background-color: teal;
     font-family: "Times New Roman", Times, serif;
 } */
-/* * {
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-} */
+}
+.topBar form {
+    display: flex;
+    justify-content: center;
+}
+.titleHeadline {
+    text-align: center;
+}
 .image-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
@@ -143,4 +150,18 @@
 }
 .userComment .commentText {
     flex: 1 0 100%;
+}
+
+.noResult {
+    height: 20vh;
+    width: 20vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.nav {
+    background-color: green;
+    width: 20%;
+    height: 20%;
+    border: 1px solid black;
 }

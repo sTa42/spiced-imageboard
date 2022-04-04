@@ -1,0 +1,1 @@
+SELECT *,(SELECT id FROM images WHERE id > $1 ORDER BY id ASC LIMIT 1) AS nextId ,(SELECT id FROM images WHERE id < $1 ORDER BY id DESC LIMIT 1) as prevId FROM images where id = $1;

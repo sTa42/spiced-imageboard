@@ -70,7 +70,7 @@ app.get("/image/:imageId", (req, res) => {
             res.json({ success: true, image: result.rows[0] });
         })
         .catch(() => {
-            res.sendStatus(500);
+            res.json({ success: false, message: "no valid id" });
         });
 });
 

@@ -18,6 +18,15 @@ Vue.createApp({
         "modal-focus-image": modalFocusImage,
     },
     mounted() {
+        window.addEventListener("popstate", () => {
+            console.log("back/forward button clckkd");
+            console.log("updated to ", location.pathname);
+            if (location.pathname.slice(1).length === 0) {
+                this.selectedImage = null;
+            } else {
+                this.selectedImage = location.pathname.slice(1);
+            }
+        });
         fetch("/images")
             .then((resp) => resp.json())
             .then((data) => {
@@ -26,6 +35,12 @@ Vue.createApp({
                 this.images = data;
                 this.lastIdImage = data[data.length - 1].id;
                 console.log(this.lastIdImage);
+                console.log(location.pathname);
+
+                this.selectedImage = location.pathname.slice(1);
+            })
+            .catch((err) => {
+                console.log(err);
             });
     },
     methods: {
@@ -65,10 +80,17 @@ Vue.createApp({
         },
         selectImage(imageIdClicked) {
             console.log(imageIdClicked);
+            history.pushState({}, "", `${imageIdClicked}`);
             this.selectedImage = imageIdClicked;
         },
         unfocusImage() {
             this.selectedImage = null;
+            history.pushState({}, "", "/");
+        },
+        changeToImage(imageIdToGo) {
+            console.log("FROM PARENT", imageIdToGo);
+            history.pushState({}, "", `/${imageIdToGo}`);
+            this.selectedImage = imageIdToGo;
         },
         getMoreImages(lowestId) {
             fetch(`/images/more/${lowestId}`)

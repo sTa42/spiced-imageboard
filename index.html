@@ -6,16 +6,17 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>My Imageboard</h1>
+    <h1 class="titleHeadline">My Imageboard</h1>
     <div id="main">
-        <modal-focus-image v-if="selectedImage" :image-id="selectedImage" @close="unfocusImage"></modal-focus-image>
-        <form>
+        <modal-focus-image v-if="selectedImage" :image-id="selectedImage" @close="unfocusImage" @change="changeToImage"></modal-focus-image>
+        <div class="topBar"><form>
             <input v-model="username" type="text" name="username" placeholder="username" required>
             <input v-model="title" type="text" name="title" placeholder="title" required>
             <input v-model="description" type="text" name="description" placeholder="description" required>
             <input  @change="fileSelectHandler" ref="fileInput" type="file" name="file" accept="image/*">
-            <button @click.prevent="clickHandler" >SUBMIT</button>
+            <button @click.prevent="clickHandler">SUBMIT</button>
         </form>
+        </div>
         <div v-if="images.length" class="image-container">
             <div v-for="image in images" :key="image.id" @click="selectImage(image.id)" class="image-card">
                 <img :src="image.url" :alt="image.title" width="350" height="200">
