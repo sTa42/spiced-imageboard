@@ -19,8 +19,10 @@ const modalFocusImage = {
     props: ["imageId"],
     watch: {
         imageId(newId, oldId) {
-            console.log(newId, oldId, "HEY I SHOULD CHANGE");
-            this.getImageData(newId);
+            console.log(newId, oldId, "HEY I SHOULD CHANGE FROM COMMENTS");
+            if (!isNaN(newId)) {
+                this.getImageData(this.imageId);
+            }
         },
     },
     mounted() {
@@ -56,50 +58,58 @@ const modalFocusImage = {
         },
         triggerGoNext() {
             console.log("GO NEXT: ", this.nextId);
-            this.$emit("change", this.nextId);
+            this.$emit("update", this.nextId);
         },
-        triggerGoPrev() {
+        triggerGoPrev(e) {
+            console.log(e);
             console.log("GO PREV: ", this.prevId);
-            this.$emit("change", this.prevId);
+            this.$emit("update", this.prevId);
         },
         formatDate(date) {
-            console.log(date);
-            let myDate = new Date(date);
-            console.log(myDate);
-            console.log(myDate.getUTCMonth());
-            return `${myDate.getDate()}.${myDate.getMonth()}.${myDate.getFullYear()} ${myDate.getHours()}:${myDate.getMinutes()}`;
+            let year = date.substring(0, 4);
+            let month = date.substring(5, 7);
+            let day = date.substring(8, 10);
+            let hours = date.substring(11, 13);
+            let minutes = date.substring(14, 16);
+            let seconds = date.substring(17, 19);
+            return `${hours}:${minutes}:${seconds} ${day}.${month}.${year}`;
         },
     },
     template: `
     <div class="overlay" @click=triggerUnfocus>
-        <div v-if=prevId @click.stop=triggerGoPrev class="nav">PREV</div>
-        <div v-if=nextId @click.stop=triggerGoNext class="nav">NEXT</div> 
-        <img @click=triggerUnfocus src="/close-button.png" class="closeButton" width="50" height="50" alt="unfocus image button">
-        <div class="focusImageContainer" @click.stop>
+        <div class="exitContainer">
+            <img @click=triggerUnfocus src="/x-square.svg" class="navButton exit" width="50" height="50" alt="unfocus image button">
+        </div>
+        <img v-if="nextId" @click.stop="triggerGoNext" src="/arrow-left-square.svg" class="navButton" width="50" height="50" alt="next image button">
+        <div @click.stop>
         
-        <div v-if=showNoResult class="noResult"><p>🙁 Oh noe, that image does not exist. 🙁</p></div>
-        <div v-else>
-            <img :src="url" :alt="title" class="focusedImage">
+        <div v-if="showNoResult" class="noResult"><p>🙁 Oh noe, that image does not exist. 🙁</p>
+        </div>
+        <div v-else class="focusImageContainer">
+            <div class="imageContainerFocus">
+            <img :src="url" :alt="title" class="focusedImage"></div>
                 <div class="attributesContainer">
                     <div class="modalTitle">
                         <h4>{{title}}</h4>
                     </div>
                     <div class="modalAttribute">
-                        <p>UPLOADED BY</p>
+                        <p><span class="attributesType">UPLOADED BY</span></p>
                         <p>{{username}}</p>
                     </div>
                     <div class="modalAttribute">
-                        <p>UPLOAD DATE</p>
-                        <p>{{createdAt}}</p>
+                        <p><span class="attributesType">UPLOAD DATE</span></p>
+                        <p>{{formatDate(createdAt)}}</p>
                     </div>
                     <div class="modalDescription">
-                        <p>DESCRIPTION</p>
+                        <p><span class="attributesType">DESCRIPTION</span></p>
                         <p>{{description}}</p>
                     </div>
                 </div>
                 <comments-component v-if="imageId" :image-id="imageId"></comments-component>
                 </div>
         </div>
+        <img v-if="prevId" @click.stop="triggerGoPrev" src="/arrow-right-square.svg" class="navButton" width="50" height="50" alt="prev image button">
+
     </div>`,
 };
 export default modalFocusImage;

@@ -8,7 +8,7 @@
 <body>
     <h1 class="titleHeadline">My Imageboard</h1>
     <div id="main">
-        <modal-focus-image v-if="selectedImage" :image-id="selectedImage" @close="unfocusImage" @change="changeToImage"></modal-focus-image>
+        <modal-focus-image v-if="selectedImage" :image-id="selectedImage" @close="unfocusImage" @update="changeToImage"></modal-focus-image>
         <div class="topBar"><form>
             <input v-model="username" type="text" name="username" placeholder="username" required>
             <input v-model="title" type="text" name="title" placeholder="title" required>
@@ -17,6 +17,7 @@
             <button @click.prevent="clickHandler">SUBMIT</button>
         </form>
         </div>
+        <button v-if="newContentFound" class="loadMore" @click="loadNewImages">New Images found, please click to get them.</button>
         <div v-if="images.length" class="image-container">
             <div v-for="image in images" :key="image.id" @click="selectImage(image.id)" class="image-card">
                 <img :src="image.url" :alt="image.title" width="350" height="200">
